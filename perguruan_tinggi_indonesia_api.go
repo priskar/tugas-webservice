@@ -18,6 +18,12 @@ type perguruanTinggi struct{
         No_telepon              string
 }
 
+type rektor struct{
+        Id_rektor       int
+        Nama_rektor     string
+        Email           string
+}
+
 func main() {
         port:=8181
 
