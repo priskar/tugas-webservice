@@ -26,9 +26,7 @@ type rektor struct{
 
 func main() {
         port:=8181
-
         http.HandleFunc("/perguruan_tinggi/", func(w http.ResponseWriter, r *http.Request) {
-
                 switch r.Method {
                 case "GET":
                         s:=r.URL.Path[len("/perguruan_tinggi/"):]
@@ -40,6 +38,20 @@ func main() {
                         http.Error(w,"invalid",405)
                 }
         })
+
+        http.HandleFunc("/rektor/", func(w http.ResponseWriter, r *http.Request) {
+                switch r.Method {
+                case "GET":
+                        s:=r.URL.Path[len("/rektor/"):]
+                        if s==""{
+                                GetAllRektor(w, r)
+                        }
+
+                default:
+                        http.Error(w,"invalid",405)
+                }
+        })
+
         log.Printf("Server starting on port %v", port)
         log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", port), nil))
 }
@@ -68,6 +80,37 @@ func GetAllPerguruanTinggi(w http.ResponseWriter, r *http.Request) {
                         log.Fatal(err)
                 }
                 json.NewEncoder(w).Encode(&perguruan_tinggi)
+        }
+        err=rows.Err()
+        if err != nil {
+                log.Fatal(err)
+        }
+}
+
+//GetAllRektor
+func GetAllRektor(w http.ResponseWriter, r *http.Request) {
+        db, err := sql.Open("mysql",
+                "root:@tcp(127.0.0.1:3306)/perguruan_tinggi_indonesia")
+
+        if err != nil {
+                log.Fatal(err)
+        }
+        defer db.Close()
+
+        rektor := rektor{}
+
+        rows, err:=db.Query("select Id_rektor, Nama_rektor, Email from rektor")
+        if err != nil {
+                log.Fatal(err)
+        }
+
+        defer rows.Close()
+        for rows.Next() {
+                err:= rows.Scan(&rektor.Id_rektor, &rektor.Nama_rektor, &rektor.Email)
+                if err != nil{
+                        log.Fatal(err)
+                }
+                json.NewEncoder(w).Encode(&rektor)
         }
         err=rows.Err()
         if err != nil {
