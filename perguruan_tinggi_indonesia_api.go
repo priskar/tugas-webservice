@@ -28,27 +28,29 @@ func main() {
         port:=8181
         http.HandleFunc("/perguruan_tinggi/", func(w http.ResponseWriter, r *http.Request) {
                 switch r.Method {
-                case "GET":
-                        s:=r.URL.Path[len("/perguruan_tinggi/"):]
-                        if s==""{
-                                GetAllPerguruanTinggi(w, r)
-                        }
+                        case "GET":
+                                s:=r.URL.Query().Get("provinsi")
+                                if s!=""{
+                                        GetPerguruanTinggiByProvinsi(w, r, s)
+                                } else {
+                                        GetAllPerguruanTinggi(w, r)
+                                }
 
-                default:
-                        http.Error(w,"invalid",405)
+                        default:
+                                http.Error(w,"invalid",405)
                 }
         })
 
         http.HandleFunc("/rektor/", func(w http.ResponseWriter, r *http.Request) {
                 switch r.Method {
-                case "GET":
-                        s:=r.URL.Path[len("/rektor/"):]
-                        if s==""{
-                                GetAllRektor(w, r)
-                        }
+                        case "GET":
+                                s:=r.URL.Path[len("/rektor/"):]
+                                if s==""{
+                                        GetAllRektor(w, r)
+                                }
 
-                default:
-                        http.Error(w,"invalid",405)
+                        default:
+                                http.Error(w,"invalid",405)
                 }
         })
 
@@ -111,6 +113,37 @@ func GetAllRektor(w http.ResponseWriter, r *http.Request) {
                         log.Fatal(err)
                 }
                 json.NewEncoder(w).Encode(&rektor)
+        }
+        err=rows.Err()
+        if err != nil {
+                log.Fatal(err)
+        }
+}
+
+//GetPerguruanTinggiByProvinsi
+func GetPerguruanTinggiByProvinsi(w http.ResponseWriter, r *http.Request, provinsi string) {
+        db, err := sql.Open("mysql",
+                "root:@tcp(127.0.0.1:3306)/perguruan_tinggi_indonesia")
+
+        if err != nil {
+                log.Fatal(err)
+        }
+        defer db.Close()
+
+        perguruan_tinggi := perguruanTinggi{}
+
+        rows, err:=db.Query("select Id_perguruan_tinggi, Nama_perguruan_tinggi, Alamat, Provinsi, No_telepon from perguruan_tinggi where Provinsi like?", provinsi)
+        if err != nil {
+                log.Fatal(err)
+        }
+
+        defer rows.Close()
+        for rows.Next() {
+                err:= rows.Scan(&perguruan_tinggi.Id_perguruan_tinggi, &perguruan_tinggi.Nama_perguruan_tinggi, &perguruan_tinggi.Alamat, &perguruan_tinggi.Provinsi, &perguruan_tinggi.No_telepon)
+                if err != nil{
+                        log.Fatal(err)
+                }
+                json.NewEncoder(w).Encode(&perguruan_tinggi)
         }
         err=rows.Err()
         if err != nil {
