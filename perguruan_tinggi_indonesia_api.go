@@ -153,3 +153,34 @@ func GetAllPerguruanTinggiNameAndRektorName(w http.ResponseWriter, r *http.Reque
                 log.Fatal(err)
         }
 }
+
+//GetPerguruanTinggiNameAndRektorNameByProvinsi
+func GetPerguruanTinggiNameAndRektorNameByProvinsi(w http.ResponseWriter, r *http.Request, provinsi string) {
+        db, err := sql.Open("mysql",
+                "root:@tcp(127.0.0.1:3306)/perguruan_tinggi_indonesia")
+
+        if err != nil {
+                log.Fatal(err)
+        }
+        defer db.Close()
+
+        perguruan_tinggi := perguruanTinggiRektor{}
+
+        rows, err:=db.Query("select Nama_perguruan_tinggi, Nama_rektor from perguruan_tinggi natural join rektor where Provinsi like?", provinsi)
+        if err != nil {
+                log.Fatal(err)
+        }
+
+        defer rows.Close()
+        for rows.Next() {
+                err:= rows.Scan(&perguruan_tinggi.Nama_perguruan_tinggi, &perguruan_tinggi.Nama_rektor)
+                if err != nil{
+                        log.Fatal(err)
+                }
+                json.NewEncoder(w).Encode(&perguruan_tinggi)
+        }
+        err=rows.Err()
+        if err != nil {
+                log.Fatal(err)
+        }
+}
