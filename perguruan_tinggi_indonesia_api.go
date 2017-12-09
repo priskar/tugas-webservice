@@ -57,6 +57,21 @@ func main() {
                 }
         })
 
+        http.HandleFunc("/perguruan_tinggi_rektor/", func(w http.ResponseWriter, r *http.Request) {
+                switch r.Method {
+                        case "GET":
+                                s:=r.URL.Query().Get("provinsi")
+                                if (s!="") {
+                                        GetPerguruanTinggiAndRektorByProvinsi(w, r, s)
+                                } else {
+                                        GetAllPerguruanTinggiAndRektor(w, r) 
+                                }
+
+                        default:
+                                http.Error(w,"invalid",405)
+                }
+        })
+
         log.Printf("Server starting on port %v", port)
         log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", port), nil))
 }
