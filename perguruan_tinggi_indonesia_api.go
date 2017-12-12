@@ -75,6 +75,22 @@ func main() {
                 }
         })
 
+        //Handler untuk mendapatkan nama perguruan tinggi dan nama rektor
+        http.HandleFunc("/perguruan_tinggi_rektor_nama/", func(w http.ResponseWriter, r *http.Request) {
+                switch r.Method {
+                        case "GET":
+                                s:=r.URL.Query().Get("provinsi")
+                                if (s!="") {
+                                        GetPerguruanTinggiNameAndRektorNameByProvinsi(w, r, s)
+                                } else {
+                                        GetAllPerguruanTinggiNameAndRektorName(w, r) 
+                                }
+
+                        default:
+                                http.Error(w,"invalid",405)
+                }
+        })
+
         log.Printf("Server starting on port %v", port)
         log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", port), nil))
 }
