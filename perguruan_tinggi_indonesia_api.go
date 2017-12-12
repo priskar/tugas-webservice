@@ -76,7 +76,8 @@ func main() {
         log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", port), nil))
 }
 
-//GetAllPerguruanTinggi
+//Fungsi GetAllPerguruanTinggi akan mengembalikan data seluruh perguruan tinggi di Indonesia
+//Data perguruan tinggi yang dikembalikan berupa Id_perguruan_tinggi, Nama_perguruan_tinggi, Alamat, Provinsi, dan No_telepon
 func GetAllPerguruanTinggi(w http.ResponseWriter, r *http.Request) {
         db, err := sql.Open("mysql",
                 "root:@tcp(127.0.0.1:3306)/perguruan_tinggi_indonesia")
@@ -107,7 +108,8 @@ func GetAllPerguruanTinggi(w http.ResponseWriter, r *http.Request) {
         }
 }
 
-//GetPerguruanTinggiByProvinsi
+//Fungsi GetPerguruanTinggiByProvinsi akan mengembalikan data perguruan tinggi di Indonesia yang terletak di provinsi tertentu
+//Data perguruan tinggi yang dikembalikan berupa Id_perguruan_tinggi, Nama_perguruan_tinggi, Alamat, dan No_telepon
 func GetPerguruanTinggiByProvinsi(w http.ResponseWriter, r *http.Request, provinsi string) {
         db, err := sql.Open("mysql",
                 "root:@tcp(127.0.0.1:3306)/perguruan_tinggi_indonesia")
@@ -138,7 +140,7 @@ func GetPerguruanTinggiByProvinsi(w http.ResponseWriter, r *http.Request, provin
         }
 }
 
-//GetAllPerguruanTinggiNameAndRektorName
+//Fungsi GetAllPerguruanTinggiNameAndRektorName akan mengembalikan nama perguruan tinggi di seluruh Indonesia beserta nama rektor dari setiap perguruan tinggi
 func GetAllPerguruanTinggiNameAndRektorName(w http.ResponseWriter, r *http.Request) {
         db, err := sql.Open("mysql",
                 "root:@tcp(127.0.0.1:3306)/perguruan_tinggi_indonesia")
@@ -169,7 +171,7 @@ func GetAllPerguruanTinggiNameAndRektorName(w http.ResponseWriter, r *http.Reque
         }
 }
 
-//GetPerguruanTinggiNameAndRektorNameByProvinsi
+//Fungsi GetPerguruanTinggiNameAndRektorNameByProvinsi akan mengembalikan nama perguruan tinggi yang terletak di provinsi tertentu beserta nama rektor dari perguruan tinggi tersebut
 func GetPerguruanTinggiNameAndRektorNameByProvinsi(w http.ResponseWriter, r *http.Request, provinsi string) {
         db, err := sql.Open("mysql",
                 "root:@tcp(127.0.0.1:3306)/perguruan_tinggi_indonesia")
@@ -200,7 +202,9 @@ func GetPerguruanTinggiNameAndRektorNameByProvinsi(w http.ResponseWriter, r *htt
         }
 }
 
-//GetAllPerguruanTinggiAndRektorByProvinsi
+//Fungsi GetAllPerguruanTinggiAndRektor akan mengembalikan data perguruan tinggi di seluruh Indonesia beserta data rektor dari setiap perguruan tinggi
+//Data perguruan tinggi yang dikembalikan berupa Id_perguruan_tinggi, Nama_perguruan_tinggi, Alamat, dan No_telepon
+//Data rektor yang dikembalikan berupa Id_rektor, Nama_rektor, dan Email.
 func GetAllPerguruanTinggiAndRektor(w http.ResponseWriter, r *http.Request) {
         db, err := sql.Open("mysql",
                 "root:@tcp(127.0.0.1:3306)/perguruan_tinggi_indonesia")
@@ -231,7 +235,9 @@ func GetAllPerguruanTinggiAndRektor(w http.ResponseWriter, r *http.Request) {
         }
 }
 
-//GetPerguruanTinggiAndRektorByProvinsi
+//Fungsi GetPerguruanTinggiAndRektorByProvinsi akan mengembalikan data perguruan tinggi yang terletak di provinsi tertentu beserta data rektor dari perguruan tinggi tersebut
+//Data perguruan tinggi yang dikembalikan berupa Id_perguruan_tinggi, Nama_perguruan_tinggi, Alamat, dan No_telepon
+//Data rektor yang dikembalikan berupa Id_rektor, Nama_rektor, dan Email.
 func GetPerguruanTinggiAndRektorByProvinsi(w http.ResponseWriter, r *http.Request, provinsi string) {
         db, err := sql.Open("mysql",
                 "root:@tcp(127.0.0.1:3306)/perguruan_tinggi_indonesia")
