@@ -42,6 +42,8 @@ type perguruanTinggiAndRektor struct{
 
 func main() {
         port:=8181
+        
+        //Handler untuk mendapatkan data perguruan tinggi
         http.HandleFunc("/perguruan_tinggi/", func(w http.ResponseWriter, r *http.Request) {
                 switch r.Method {
                         case "GET":
@@ -57,6 +59,7 @@ func main() {
                 }
         })
 
+        //Handler untuk mendapatkan data perguruan tinggi dan data rektor
         http.HandleFunc("/perguruan_tinggi_rektor/", func(w http.ResponseWriter, r *http.Request) {
                 switch r.Method {
                         case "GET":
