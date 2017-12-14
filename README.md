@@ -18,7 +18,7 @@ Cara menjalankan web service:
 
 6. Untuk mendapatkan nama perguruan tinggi yang terletak di provinsi tertentu beserta nama rektor dari perguruan tinggi tersebut:
 - Ketik 167.205.67.244:8181/perguruan_tinggi_rektor_nama/?provinsi={nama provinsi}
-- Contoh : 167.205.67.244:8181/perguruan_tinggi/?provinsi=Kalimantan Barat
+- Contoh : 167.205.67.244:8181/perguruan_tinggi_rektor_nama/?provinsi=Kalimantan Barat
 
 7. Untuk mendapatkan data seluruh perguruan tinggi di Indonesia beserta data rektor dari setiap perguruan tinggi:
 - Ketik 167.205.67.244:8181/perguruan_tinggi_rektor/?provinsi=
@@ -26,4 +26,4 @@ Cara menjalankan web service:
 
 8. Untuk mendapatkan data perguruan tinggi yang terletak di provinsi tertentu beserta data rektor dari perguruan tinggi tersebut:
 - Ketik 167.205.67.244:8181/perguruan_tinggi_rektor/?provinsi={nama provinsi}
-- Contoh : 167.205.67.244:8181/perguruan_tinggi/?provinsi=Kalimantan Barat
+- Contoh : 167.205.67.244:8181/perguruan_tinggi_rektor/?provinsi=Kalimantan Barat
